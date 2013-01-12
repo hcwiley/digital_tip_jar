@@ -46,7 +46,7 @@ def get_artist(user_name):
     if artist is None:
         return None
 
-    artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'])
+    artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'])
     artist_to_return.pw_hash = artist['pw_hash']
 
     return artist_to_return
@@ -60,7 +60,7 @@ def get_artists():
     artists = []
 
     for artist in data:
-        artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'])
+        artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'])
         artist_to_return.pw_hash = artist['pw_hash']
 
         artists.append(artist_to_return)
