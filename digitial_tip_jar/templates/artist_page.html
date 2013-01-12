@@ -2,14 +2,14 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
 
-    <h2>{{user.artist_name}}</h2>
-            <ul><span>Band Owner:<b> {{ user.first_name }} {{ user.last_name }}</b></span></ul>
+    <h2>{{artist.artist_name}}</h2>
+            <ul><span>Band Owner:<b> {{ artist.first_name }} {{ artist.last_name }}</b></span></ul>
 
     <h3>Pay This Band</h3>
       <ul>PayPal Us!</ul>
 
     <h3>QR Code</h3>
-      <ul><img src="{{user.qr_path}}"></ul>
+      <ul><img src="{{artist.qr_path}}"></ul>
 
 
 {% endblock %}
