@@ -1,7 +1,20 @@
 import re
+import qrcode
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
+
+def qrcode(string):
+  qr = qrcode.QRCode(
+    version=1,
+    error_correction=qrcode.constants.ERROR_CORRECT_L,
+    box_size=10,
+    border=4,
+  )
+  qr.add_data(string)
+  qr.make(fit=True)
+  img = qr.make_image()
+    	
 def slugify(value, users):
     """
     Normalizes string, converts to lowercase, removes non-alpha characters,

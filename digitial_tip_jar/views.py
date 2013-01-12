@@ -51,7 +51,7 @@ def edit(user_name = None):
             else:
                 slug = user_name
 
-            save_user(User(request.form['first_name'], request.form['last_name'], slug))
+            save_user(User(request.form['first_name'], request.form['last_name'], slug, request.form['band_name']))
 
             return redirect(url_for('index'))
         else:

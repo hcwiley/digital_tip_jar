@@ -5,6 +5,10 @@
         <ul>
             {% if not user %}
                 <li>
+                    <label class="bold">Name of Act</label>
+                    <input id="first_name" name="band_name" type="text" maxlength="250"/>
+                </li>
+                <li>
                     <label class="bold">First Name</label>
                     <input id="first_name" name="first_name" type="text" maxlength="250"/>
                 </li>
@@ -14,6 +18,10 @@
                 </li>
 
             {% else %}
+                <li>
+                    <label class="bold">Band Name</label>
+                    <input id="first_name" name="band_name" type="text" maxlength="250" value="{{ user.band_name }}"/>
+                </li>
                 <li>
                     <label class="bold">First Name</label>
                     <input id="first_name" name="first_name" type="text" maxlength="250" value="{{ user.first_name }}"/>

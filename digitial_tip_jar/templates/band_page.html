@@ -2,9 +2,14 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
 
-    <h3>User</h3>
-            <span>{{ user.first_name }}</span><br/>
-            <span>{{ user.last_name }}</span>
+    <h2>{{user.band_name}}</h2>
+            <ul><span>Band Owner:<b> {{ user.first_name }} {{ user.last_name }}</b></span></ul>
+
+    <h3>Pay This Band</h3>
+      <ul>PayPal Us!</ul>
+
+    <h3>QR Code</h3>
+
 
 {% endblock %}
 {% block js %}
