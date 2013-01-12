@@ -118,13 +118,24 @@ def get_facebook_oauth_token():
     return session.get('oauth_token')
 
 
+@app.route('/<user_name>/activity')
+def user_activity(user_name):
+    if 'logged_in' in session and 'user_name' in session and session['user_name'] == user_name:
+        artist = get_artist(user_name)
+        if artist is not None:
+            return render_template('artist_activity.html', artist=artist, tips=get_tips_for_artist(user_name), total_tips=get_total_tip_amount_for_artist(user_name))
+
+    return "Error"
+
 @app.route('/<user_name>')
-def job(user_name):
+def user_profile(user_name):
     artist = get_artist(user_name)
     if artist is not None:
         return render_template('artist_page.html', artist=artist, tips=get_tips_for_artist(user_name))
 
     return "Error"
+
+
 
 @app.route('/savetip', methods=['POST'])
 def post_tip():

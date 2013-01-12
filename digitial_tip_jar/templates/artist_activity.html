@@ -4,7 +4,11 @@
 
     <h2>{{artist.artist_name}}</h2>
 
-      {% include 'paypal.html' %}
+    <h3>Total Tips</h3>
+    <h5>${{ total_tips }}</h5>
+
+    <h3>QR Code</h3>
+    <img src="{{artist.qr_path}}">
 
     {% if tips|count > 0 %}
         <h3>Recent Tips</h3>
@@ -33,25 +37,7 @@
 
 
         $(".predefined-amount").click(function(){
-          $("#amount").val($(this).attr('data-value'))
+            $("#amount").val($(this).attr('data-value'))
         });
-
-        function save_tip(){
-            $.ajax({
-                async: false,
-                type: "POST",
-                url: '/savetip',
-                data: {
-                    "user_name": '{{artist.user_name}}',
-                    "amount": $("#amount").val(),
-                    "message": $("#message").val(),
-                    "email":$("#email").val(),
-                    "name": $("#name").val()
-                },
-                success: function() {
-
-                }
-            });
-        }
     </script>
 {% endblock %}

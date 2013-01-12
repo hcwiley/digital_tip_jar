@@ -23,6 +23,17 @@ def save_tip(tip):
     collection = db['tips']
     collection.insert(tip.__dict__)
 
+def get_total_tip_amount_for_artist(artist_user_name):
+    connection = Connection(MONGODB_HOST, MONGODB_PORT)
+    db = connection['digital_tip_jar']
+    collection = db['tips']
+    data = collection.find({"artist_user_name": artist_user_name}).sort("timestamp", DESCENDING)
+    sum = 0.0
+    for tip in data:
+        sum = sum + tip['amount']
+
+    return sum
+
 def get_tips_for_artist(artist_user_name, size=20):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
