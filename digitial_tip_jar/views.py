@@ -27,17 +27,14 @@ def page_not_found(e):
 def server_error(e):
     return render_template('500.html'), 500
 
-
 @app.route('/')
 def index():
     artists = get_artists()
     return render_template('index.html', artists=artists)
 
-
 @app.route('/tips')
 def tip_activity():
     return render_template('tip_activity.html', most_recent=get_most_recent_tip(), most_popular_bands=get_most_popular_bands(), top_patrons=get_active_tippers(), most_generous_patrons=get_generous_tippers())
-
 
 def validate_login(user_name, password):
     if len(user_name) == 0:
@@ -179,9 +176,11 @@ def validate_update_artist(artist_form):
 @app.route('/register', methods=['GET', 'POST'])
 @app.route('/update/<user_name>', methods=['GET', 'POST'])
 def edit(user_name = None):
-
+    user = get_artist(session['user_name'])
+    if user.user_name is not user_name and not user.is_admin:
+      return redirect(url_for('index'))
+       
     if request.method == 'POST':
-
         if user_name:
             message = validate_update_artist(request.form)
         else:

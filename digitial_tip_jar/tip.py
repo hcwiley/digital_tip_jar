@@ -31,7 +31,6 @@ def get_total_tip_amount_for_artist(artist_user_name):
     sum = 0.0
     for tip in data:
         sum = sum + tip['amount']
-
     return sum
 
 def get_tips_for_artist(artist_user_name, size=20):
@@ -46,7 +45,6 @@ def get_tips_for_artist(artist_user_name, size=20):
             break
         tips.append(Tip(tip['artist_user_name'], tip['amount'], tip['message'], tip['email_address'], tip['full_name'], tip['timestamp']))
         count = count + 1
-
     return tips
 
 def get_most_recent_tip():
@@ -54,7 +52,6 @@ def get_most_recent_tip():
     db = connection['digital_tip_jar']
     collection = db['tips']
     data = collection.find().sort("timestamp", DESCENDING).limit(1)
-
 
     for tip in data:
         recent_tip_info = {}
@@ -65,7 +62,6 @@ def get_most_recent_tip():
         return recent_tip_info
 
     return None
-
 
 def get_active_tippers():
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
