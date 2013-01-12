@@ -20,13 +20,13 @@
         <div class="control-group">
             <label class="control-label" for="email">Email</label>
             <div class="controls">
-                <input type="text" id="email" placeholder="Email">
+                <input type="text" id="email" placeholder="Email" name="email">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="password">Password</label>
             <div class="controls">
-                <input type="password" id="password" placeholder="Password">
+                <input type="password" id="password" placeholder="Password" name="password">
             </div>
         </div>
         <div class="control-group">
@@ -51,13 +51,13 @@
         <div class="control-group">
             <label class="control-label" for="email">Email</label>
             <div class="controls">
-                <input type="text" id="email" placeholder="Email" value="{{ user.email }}">
+                <input type="text" id="email" placeholder="Email" value="{{ user.email }}" name="email">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="password">Password</label>
             <div class="controls">
-                <input type="password" id="password" placeholder="Password">
+                <input type="password" id="password" placeholder="Password" name="password">
             </div>
         </div>
         <div class="control-group">
@@ -78,7 +78,7 @@
 <script>
     function checkPassword(){
         var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
+        var confirmPassword = $("#confirm_password").val();
 
         if(password == confirmPassword)
             return true;

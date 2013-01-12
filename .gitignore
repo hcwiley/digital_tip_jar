@@ -16,3 +16,4 @@ dist
 .DS_Store
 *.pyc
 dev_config.py
+qr

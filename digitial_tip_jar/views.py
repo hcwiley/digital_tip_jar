@@ -91,10 +91,11 @@ def edit(user_name = None):
             message = validate_new_user(request.form)
 
         if message is None:
-            # [XXX] Hardcoded shit
-            qr_path = qrcode_string("http://75.126.35.122/"+user_name)
+
 
             if user_name is None:
+                # [XXX] Hardcoded shit
+                qr_path = qrcode_string("http://75.126.35.122/"+request.form['user_name'])
                 user = User(request.form['user_name'], request.form['band_name'], request.form['email'], qr_path, request.form['password'])
                 flash('Registered Successfully',category='success')
             else:

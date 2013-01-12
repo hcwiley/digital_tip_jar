@@ -2,6 +2,7 @@ import re
 import json
 import qrcode
 import uuid
+from config import QR_PATH
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
@@ -17,7 +18,7 @@ def qrcode_string(string):
   qr.make(fit=True)
   img = qr.make_image()
   qr_url = '/static/qr/'+str(uuid.uuid4())+'.jpg'
-  qrpath = '/root/digital_tip_jar/digitial_tip_jar'+qr_url
+  qrpath = QR_PATH + qr_url
   img.save(qrpath)
   return qr_url
     	
