@@ -1,4 +1,4 @@
 digital_tip_jar
 ===============
 
-Digital Tip Jar
+Digital Tip Jar app for codemkrs.com
