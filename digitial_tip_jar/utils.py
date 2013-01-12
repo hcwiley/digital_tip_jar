@@ -2,6 +2,7 @@ import re
 import json
 import qrcode
 import uuid
+from config import QR_PATH
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
@@ -16,9 +17,10 @@ def qrcode_string(string):
   qr.add_data(string)
   qr.make(fit=True)
   img = qr.make_image()
-  qrpath = 'static/qr'+str(uuid.uuid4())+'.jpg'
+  qr_url = '/static/qr/'+str(uuid.uuid4())+'.jpg'
+  qrpath = QR_PATH + qr_url
   img.save(qrpath)
-  return qrpath
+  return qr_url
     	
 def slugify(value, users):
     """
@@ -43,6 +45,13 @@ def slugify(value, users):
         slug = slug + str(count)
 
     return slug
+
+
+def is_username_unique(user_name, users):
+    for user in users:
+        if user_name.lower() == user.user_name.lower():
+            return False
+    return True
 
 
 

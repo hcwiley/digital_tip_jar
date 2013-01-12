@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
-<div class="span4 offset1">
-    <h3>Bands</h3>
+
+    <h3>Bands / Artists</h3>
     <ul>
-        {% for user in users %}
-            <span><a href="/{{user.user_name}}">{{ user.band_name }}</a></span><br/>
+        {% for artist in artists %}
+            <span><a href="/{{artist.user_name}}">{{ artist.artist_name }}</a></span><br/>
         {% endfor %}
     </ul>
 
     <h3>Register a Band</h3>
     <ul><a href="/register" class="btn btn-primary">Register a Band</a></ul>
 </div>
+
 {% endblock %}
 {% block js %}
 {% endblock %}
