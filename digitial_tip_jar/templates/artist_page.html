@@ -42,16 +42,19 @@
         }
 
         function init(){
-            $(".time").each(function(){
-                $(this).text(moment.utc($(this).attr('data-time')).fromNow());
-            });
-
+            $('html,body').animate({scrollTop:150+'px'}, 500);
 
             $(".predefined-amount").click(function(){
                 $("#amount").val($(this).attr('data-value'))
             });
 
-            $('html,body').animate({scrollTop:150+'px'}, 500);
+            $("#name").focus(function(){
+                $(".optional").fadeIn(750);
+            });
+
+            $(".time").each(function(){
+                $(this).text(moment.utc($(this).attr('data-time')).fromNow());
+            });
         }
 
         $(document).ready(init);

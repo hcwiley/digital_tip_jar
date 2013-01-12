@@ -5,3 +5,7 @@
 .brand_name {
     margin-left: -35px;
 }
+
+.optional {
+    display: none;
+}
