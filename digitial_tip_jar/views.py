@@ -48,12 +48,12 @@ def logout():
 def job(user_name):
     user = get_user(user_name)
     if user is not None:
-        return render_template('band_page.html', user=user)
+        return render_template('artist_page.html', user=user)
 
     return "Error"
 
 def validate_new_user(user_form):
-    if len(user_form['band_name']) == 0:
+    if len(user_form['artist_name']) == 0:
         return "Artist/Band Name is required"
 
     if len(user_form['user_name']) == 0:
@@ -69,7 +69,7 @@ def validate_new_user(user_form):
         return "Password is required"
 
 def validate_update_user(user_form):
-    if len(user_form['band_name']) == 0:
+    if len(user_form['artist_name']) == 0:
         return "Artist/Band Name is required"
 
     if len(user_form['user_name']) == 0:
@@ -96,11 +96,11 @@ def edit(user_name = None):
             if user_name is None:
                 # [XXX] Hardcoded shit
                 qr_path = qrcode_string("http://75.126.35.122/"+request.form['user_name'])
-                user = User(request.form['user_name'], request.form['band_name'], request.form['email'], qr_path, request.form['password'])
+                user = User(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'])
                 flash('Registered Successfully',category='success')
             else:
                 user = get_user(user_name)
-                user.band_name = request.form['band_name']
+                user.artist_name = request.form['artist_name']
                 user.email = request.form['email']
 
                 if 'password' in request.form and len(request.form['password']) > 0:

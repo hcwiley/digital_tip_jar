@@ -4,14 +4,14 @@
     <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
         {% if not user %}
         <div class="control-group">
-            <label class="control-label" for="band_name">Artist/Band Name</label>
+            <label class="control-label" for="artist_name">Artist/Band Name</label>
             <div class="controls">
-                <input type="text" id="band_name" placeholder="Artist/Band Name" name="band_name">
+                <input type="text" id="artist_name" placeholder="Artist/Band Name" name="artist_name">
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="band_name">Username</label>
+            <label class="control-label" for="artist_name">Username</label>
             <div class="controls">
                 <input type="text" id="user_name" placeholder="Username" name="user_name">
             </div>
@@ -42,9 +42,9 @@
         </div>
     {% else %}
         <div class="control-group">
-            <label class="control-label" for="band_name">Artist/Band Name</label>
+            <label class="control-label" for="artist_name">Artist/Band Name</label>
             <div class="controls">
-                <input type="text" id="band_name" placeholder="Artist/Band Name" name="band_name" value="{{ user.band_name }}">
+                <input type="text" id="artist_name" placeholder="Artist/Band Name" name="artist_name" value="{{ user.artist_name }}">
             </div>
         </div>
 
