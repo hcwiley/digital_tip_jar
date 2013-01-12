@@ -110,6 +110,7 @@ def facebook_authorized(resp):
       session['fb_id'] = me.data['id']
       session['fb_username'] = me.data['username']
       session['fb_email'] = me.data['email']
+      session['user_name'] = me.data['username']
       return redirect(url_for('edit'))
 
 
