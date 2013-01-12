@@ -1,5 +1,5 @@
 import config
-from flask import request, render_template, redirect, url_for, flash
+from flask import request, render_template, redirect, url_for, flash, session
 from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
 from user import *
@@ -10,9 +10,38 @@ def index():
     return render_template('index.html', users=users)
 
 
+def validate_login(user_name, password):
+    if len(user_name) == 0:
+        return "Username not specified"
+
+    if len(password) == 0:
+        return "Password not specified"
+
+    if get_user(user_name) is None or get_user(user_name).check_password(password) is False:
+        return "Invalid Username or Password"
+
+    return None
+
 @app.route('/login', methods=['POST','GET'])
 def login():
+    if request.method == 'POST':
+        user_name = request.form['user_name']
+        password = request.form['password']
+        message = validate_login(user_name, password)
+
+        if message:
+            flash(message,category='error')
+            render_template('login.html')
+        else:
+            session['user_name'] = user_name
+            return redirect(url_for('index'))
+
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user_name', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/<user_name>')

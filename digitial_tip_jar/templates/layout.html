@@ -15,7 +15,12 @@
                 <a class="brand" href="/">Digital Tip Jar</a>
                 <ul class="nav">
                     <li><a href="/register">Register Band</a></li>
-                    <li><a href="/login">Login</a></li>
+                    {% if session.user_name %}
+                        <li><a href="/{{ session.user_name }}">Welcome {{ session.user_name }}</a></li>
+                        <li><a href="/logout">Log out</a></li>
+                    {% else %}
+                        <li><a href="/login">Login</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
