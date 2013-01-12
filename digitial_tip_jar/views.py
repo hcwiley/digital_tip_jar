@@ -39,8 +39,10 @@ def edit(user_name = None):
                 slug = slugify(request.form['first_name'] + request.form['last_name'],get_users())
             else:
                 slug = user_name
+            # [XXX] Hardcoded shit
+            qr_path = qrcode("http://75.126.35.122/"+slug)
 
-            save_user(User(request.form['first_name'], request.form['last_name'], slug, request.form['band_name']))
+            save_user(User(request.form['first_name'], request.form['last_name'], slug, request.form['band_name'], qr_path))
 
             return redirect(url_for('index'))
         else:
