@@ -68,6 +68,9 @@ def fblogin():
 @app.route('/fblogin/authorized')
 @facebook.authorized_handler
 def facebook_authorized(resp):
+    connection = Connection(MONGODB_HOST, MONGODB_PORT)
+    db = connection['digital_tip_jar']
+    collection = db['artists']
     if resp is None:
         return 'Access denied: reason=%s error=%s' % (
             request.args['error_reason'],
@@ -77,10 +80,15 @@ def facebook_authorized(resp):
     me = facebook.get('/me')
 # This is what me.data contains:
 # {"username": "epsasnova", "first_name": "Chrrles", "last_name": "Paul", "verified": true, "name": "Chrrles Paul", "locale": "en_US", "gender": "male", "email": "vmproperly@gmail.com", "link": "http://www.facebook.com/epsasnova", "timezone": -6, "updated_time": "2012-12-07T12:09:16+0000", "id": "100003333155909" }
-    session['user_name'] = me.data['username']
-    session['fb_id'] = me.data['id']
-
-    return redirect(url_for('index'))
+    email = me.data['email']
+    artist = collection.find_one({"email":email})
+    if artist:
+      return redirect(url_for('index'))
+    else:
+      session['fb_id'] = me.data['id']
+      session['fb_username'] = me.data['username']
+      session['fb_email'] = me.data['email']
+      return redirect(url_for('register'))
 
 
 @facebook.tokengetter
@@ -146,6 +154,8 @@ def edit(user_name = None):
                 artist = get_artist(user_name)
                 artist.artist_name = request.form['artist_name']
                 artist.email = request.form['email']
+                if session['fb_id']:
+                  artist.fb_id = session['fb_id']
 
                 if 'password' in request.form and len(request.form['password']) > 0:
                     artist.set_password(request.form['password'])
@@ -163,10 +173,13 @@ def edit(user_name = None):
 
     else:
         if user_name:
-            user = get_user(user_name)
-            return render_template('register.html', user=user)
+            artist = get_artist(user_name)
+            return render_template('register.html', artist=artist)
+        elif session['fb_id']: 
+            artist = Artist(session['fb_username'],'', session['fb_email'], fb_id = session['fb_id']) 
+            return render_template('register.html', artist=artist)
         else:
-            return render_template('register.html', user=None)
+            return render_template('register.html', artist=None)
 
 
 
