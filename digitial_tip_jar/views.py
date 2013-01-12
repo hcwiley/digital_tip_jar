@@ -2,6 +2,7 @@ import config
 from flask import request, render_template, redirect, url_for
 from digitial_tip_jar import app
 from utils import slugify
+from utils import qrcode
 from user import *
 
 @app.route('/', methods=['POST','GET'])
