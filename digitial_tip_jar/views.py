@@ -96,7 +96,7 @@ def edit(user_name = None):
             if user_name is None:
                 # [XXX] Hardcoded shit
                 qr_path = qrcode_string("http://75.126.35.122/"+request.form['user_name'])
-                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request_form['paypal_id'])
+                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'])
                 flash('Registered Successfully',category='success')
             else:
                 artist = get_artist(user_name)
