@@ -88,7 +88,7 @@ def facebook_authorized(resp):
       session['fb_id'] = me.data['id']
       session['fb_username'] = me.data['username']
       session['fb_email'] = me.data['email']
-      return redirect(url_for('register'))
+      return render_template('register.html')
 
 
 @facebook.tokengetter
