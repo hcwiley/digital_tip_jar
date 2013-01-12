@@ -4,11 +4,12 @@ from pymongo import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User:
-    def __init__(self, first_name, last_name, user_name, band_name, password):
+    def __init__(self, first_name, last_name, user_name, band_name, qr_path = '', password=''):
         self.first_name = first_name
         self.last_name = last_name
         self.user_name = user_name
         self.band_name = band_name
+        self.qr_path = qr_path
         self.set_password(password)
 
     def set_password(self, password):
@@ -16,6 +17,7 @@ class User:
 
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
+
 
     def __repr__(self):
         return json.dumps(self.__dict__)
@@ -44,7 +46,7 @@ def get_user(user_name):
     if user is None:
         return None
 
-    user_to_return = User(user['first_name'], user['last_name'], user['user_name'], user['band_name'],'')
+    user_to_return = User(user['first_name'], user['last_name'], user['user_name'], user['band_name'], qr_path=user['qr_path'])
     user_to_return.pw_hash = user['pw_hash']
 
     return user_to_return
@@ -58,7 +60,7 @@ def get_users():
     users = []
 
     for user in data:
-        user_to_return = User(user['first_name'], user['last_name'], user['user_name'], user['band_name'],'')
+        user_to_return = User(user['first_name'], user['last_name'], user['user_name'], user['band_name'], qr_path=user['qr_path'])
         user_to_return.pw_hash = user['pw_hash']
 
         users.append(user_to_return)

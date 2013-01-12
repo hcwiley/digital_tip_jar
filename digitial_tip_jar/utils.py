@@ -1,11 +1,12 @@
 import re
 import json
 import qrcode
+import uuid
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
 
-def qrcode(string):
+def qrcode_string(string):
   qr = qrcode.QRCode(
     version=1,
     error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -15,6 +16,10 @@ def qrcode(string):
   qr.add_data(string)
   qr.make(fit=True)
   img = qr.make_image()
+  qr_url = '/static/qr/'+str(uuid.uuid4())+'.jpg'
+  qrpath = '/root/digital_tip_jar/digitial_tip_jar'+qr_url
+  img.save(qrpath)
+  return qr_url
     	
 def slugify(value, users):
     """
