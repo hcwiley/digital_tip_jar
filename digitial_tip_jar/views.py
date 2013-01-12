@@ -97,6 +97,7 @@ def facebook_authorized(resp):
     artist = collection.find_one({"email":email})
     if artist:
         session['logged_in'] = True
+        session['user_name'] = me.data['username']
         return redirect(url_for('index'))
     else:
       session['fb_id'] = me.data['id']
