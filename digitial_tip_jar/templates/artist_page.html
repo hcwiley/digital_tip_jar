@@ -6,7 +6,7 @@
             <ul><span>Band Owner:<b> {{ artist.first_name }} {{ artist.last_name }}</b></span></ul>
 
     <h3>Pay This Band</h3>
-      {% include 'paypal.html' %}
+      {% import 'paypal.html' wit context %}
       <ul>{{artist.paypal_id}} PayPal Us!</ul>
 
     <h3>QR Code</h3>
