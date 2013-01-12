@@ -69,6 +69,13 @@
         </div>
 
         <div class="control-group">
+            <label class="control-label" for="user_name">Username</label>
+            <div class="controls">
+                <input type="text" id="user_name" placeholder="Username" name="user_name" value="{{ artist.user_name }}">
+            </div>
+        </div>
+        
+        <div class="control-group">
             <label class="control-label" for="email">Email</label>
             <div class="controls">
                 {% if session.fb_id %}
