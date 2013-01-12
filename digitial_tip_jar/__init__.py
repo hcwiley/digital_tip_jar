@@ -3,7 +3,7 @@ import config
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
-app.config.from_object('hungry_now.config')
+app.config.from_object('digitial_tip_jar.config')
 
 if not app.debug:
     import logging
@@ -16,4 +16,4 @@ if not app.debug:
     ))
     app.logger.addHandler(file_handler)
 
-import hungry_now.views
+import digitial_tip_jar.views
