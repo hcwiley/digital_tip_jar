@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Digital Tip Jar{% endblock %}
+{% block body %}
+    <form method="POST">
+        <ul>
+            {% if not user %}
+                <li>
+                    <label class="bold">First Name</label>
+                    <input id="first_name" name="first_name" type="text" maxlength="250"/>
+                </li>
+                <li>
+                    <label class="bold">Last Name</label>
+                    <input id="last_name" name="last_name" type="text" maxlength="250"/>
+                </li>
+
+            {% else %}
+                <li>
+                    <label class="bold">First Name</label>
+                    <input id="first_name" name="first_name" type="text" maxlength="250" value="{{ user.first_name }}"/>
+                </li>
+                <li>
+                    <label class="bold">Last Name</label>
+                    <input id="last_name" name="last_name" type="text" maxlength="250" value="{{ user.last_name }}"/>
+                </li>
+            {% endif %}
+            <li>
+                <input type="submit" value="Save" class="btn"/>
+            </li>
+        </ul>
+    </form>
+{% endblock %}
