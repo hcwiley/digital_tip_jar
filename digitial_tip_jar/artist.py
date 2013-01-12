@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.son import SON
 
 class Artist:
-    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00):
+    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00, is_admin=False):
         self.user_name = user_name
         self.artist_name = artist_name
         self.email = email
@@ -14,6 +14,7 @@ class Artist:
         self.paypal_id = paypal_id
         self.fb_id = fb_id
         self.default_tip_amount = default_tip_amount
+        self.is_admin = is_admin
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
@@ -21,10 +22,8 @@ class Artist:
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
-
     def __repr__(self):
         return json.dumps(self.__dict__)
-
 
 def save_artist(artist):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
@@ -49,7 +48,7 @@ def get_artist(user_name):
     if artist is None:
         return None
 
-    artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'])
+    artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], is_admin = artist['is_admin'])
     artist_to_return.pw_hash = artist['pw_hash']
 
     return artist_to_return
@@ -63,7 +62,7 @@ def get_artists():
     artists = []
 
     for artist in data:
-        artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'])
+        artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], is_admin = artist['is_admin'])
         artist_to_return.pw_hash = artist['pw_hash']
 
         artists.append(artist_to_return)

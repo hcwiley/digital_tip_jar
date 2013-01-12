@@ -8,7 +8,7 @@
         <ul class="list unstyled">
             {% for artist in artists %}
                 <li>
-                    <h4><a href="/{{artist.user_name}}" class="artist">{{ artist.artist_name }}</a></h4>
+                    <h4><a href="/{{artist.user_name}}" class="artist">{{ artist.artist_name }}</a> {% if session.is_admin %}<a href="/edit/{{ artist.user_name }}">(edit)</a> {% endif %}</h4>
                 </li>
             {% endfor %}
         </ul>

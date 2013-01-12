@@ -27,17 +27,14 @@ def page_not_found(e):
 def server_error(e):
     return render_template('500.html'), 500
 
-
 @app.route('/')
 def index():
     artists = get_artists()
     return render_template('index.html', artists=artists)
 
-
 @app.route('/tips')
 def tip_activity():
     return render_template('tip_activity.html', most_recent=get_most_recent_tip(), most_popular_bands=get_most_popular_bands(), top_patrons=get_active_tippers(), most_generous_patrons=get_generous_tippers())
-
 
 def validate_login(user_name, password):
     if len(user_name) == 0:
@@ -62,6 +59,9 @@ def login():
             flash(message,category='error')
             render_template('login.html')
         else:
+            user = get_artist(user_name)
+            if user.is_admin:
+              session['is_admin'] = True
             session['user_name'] = user_name
             session['logged_in'] = True
             return redirect(url_for('index'))
@@ -110,7 +110,8 @@ def facebook_authorized(resp):
       session['fb_id'] = me.data['id']
       session['fb_username'] = me.data['username']
       session['fb_email'] = me.data['email']
-      return redirect(url_for('register'))
+      session['user_name'] = me.data['username']
+      return redirect(url_for('edit'))
 
 
 @facebook.tokengetter
@@ -218,8 +219,8 @@ def validate_update_artist(artist_form):
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def edit(user_name = None):
-
+def edit():
+       
     if request.method == 'POST':
 
         message = validate_new_artist(request.form)
@@ -237,12 +238,9 @@ def edit(user_name = None):
 
 
     else:
-        if user_name:
-            artist = get_artist(user_name)
-            return render_template('register.html', artist=artist)
-        elif 'fb_id' in session:
+        if 'fb_id' in session:
             artist = Artist(session['fb_username'],'', session['fb_email'], fb_id = session['fb_id']) 
-            return render_template('register.html', artist=artist, register=True)
+            return render_template('register.html', artist=artist)
         else:
             return render_template('register.html', artist=None)
 
