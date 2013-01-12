@@ -123,7 +123,7 @@ def get_facebook_oauth_token():
 def job(user_name):
     artist = get_artist(user_name)
     if artist is not None:
-        return render_template('artist_page.html', artist=artist)
+        return render_template('artist_page.html', artist=artist, tips=get_tips_for_artist(user_name))
 
     return "Error"
 

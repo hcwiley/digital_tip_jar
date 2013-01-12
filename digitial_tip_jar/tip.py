@@ -5,7 +5,6 @@ from utils import JSONEncoder
 from bson.son import SON
 from artist import get_artist
 
-
 class Tip:
     def __init__(self, artist_user_name, amount, message, email_address, full_name, timestamp):
         self.artist_user_name = artist_user_name
@@ -24,15 +23,18 @@ def save_tip(tip):
     collection = db['tips']
     collection.insert(tip.__dict__)
 
-def get_tips_for_artist(artist_user_name):
+def get_tips_for_artist(artist_user_name, size=20):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
     collection = db['tips']
-    data = collection.find({"artist_user_name": artist_user_name}).sort("time", DESCENDING)
+    data = collection.find({"artist_user_name": artist_user_name}).sort("timestamp", DESCENDING)
     tips = []
-
+    count = 0
     for tip in data:
+        if count > size:
+            break
         tips.append(Tip(tip['artist_user_name'], tip['amount'], tip['message'], tip['email_address'], tip['full_name'], tip['timestamp']))
+        count = count + 1
 
     return tips
 
@@ -40,7 +42,7 @@ def get_most_recent_tip():
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
     collection = db['tips']
-    data = collection.find().sort("time", DESCENDING).limit(1)
+    data = collection.find().sort("timestamp", DESCENDING).limit(1)
 
 
     for tip in data:

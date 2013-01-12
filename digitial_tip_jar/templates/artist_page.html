@@ -10,10 +10,32 @@
     <h3>QR Code</h3>
     <img src="{{artist.qr_path}}">
 
+    {% if tips|count > 0 %}
+        <h3>Recent Tips</h3>
+        <ul class="unstyled">
+            {% for tip in tips %}
+                <li>
+                    <h5>{{ tip.full_name }}</h5>
+                    <p>
+                        {{ tip.message }}
+                    </p>
+                    <em class="time" data-time="{{ tip.timestamp.strftime("%Y-%m-%dT%H:%M:%SZ") }}"></em>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
 
 {% endblock %}
 {% block js %}
+    <script src="{{config.STATIC_URL}}js/moment.min.js"></script>
     <script>
+
+        $(".time").each(function(){
+            $(this).text(moment.utc($(this).attr('data-time')).fromNow());
+        });
+
+
         $(".predefined-amount").click(function(){
           $("#amount").val($(this).attr('data-value'))
         });
