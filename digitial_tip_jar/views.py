@@ -1,5 +1,5 @@
 import config
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, flash
 from digitial_tip_jar import app
 from utils import slugify
 from user import *
@@ -37,14 +37,17 @@ def edit(user_name = None):
         if message is None:
             if user_name is None:
                 slug = slugify(request.form['first_name'] + request.form['last_name'],get_users())
+                flash('Registered Successfully',category='success')
             else:
+                flash('Updated Successfully',category='success')
                 slug = user_name
 
             save_user(User(request.form['first_name'], request.form['last_name'], slug, request.form['band_name']))
 
             return redirect(url_for('index'))
         else:
-            return message
+            flash(message,category='error')
+            return render_template('register.html', user=None)
 
 
     else:
