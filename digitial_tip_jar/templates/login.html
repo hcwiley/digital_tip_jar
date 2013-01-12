@@ -2,6 +2,14 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
     <form method="POST" class="form-horizontal">
+
+        <div class="control-group">
+            <div class="controls">
+                <a href="/fblogin" class="btn btn-primary">Login with Facebook</a>
+                <div class="margin-top-10">OR</div>
+            </div>
+        </div>
+
         <div class="control-group">
             <label class="control-label" for="user_name">Username</label>
             <div class="controls">
@@ -20,7 +28,6 @@
             </div>
         </div>
     </form>
-    <div><a href="/fblogin">Login with Facebook</a></div>
 {% endblock %}
 {% block js %}
 {% endblock %}

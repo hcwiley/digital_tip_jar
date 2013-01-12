@@ -3,6 +3,14 @@
 {% block body %}
     <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
         {% if not artist %}
+
+            <div class="control-group">
+                <div class="controls">
+                    <a href="/fblogin" class="btn btn-primary">Register with Facebook</a>
+                    <div class="margin-top-10">OR</div>
+                </div>
+            </div>
+
         <div class="control-group">
             <label class="control-label" for="artist_name">Artist/Band Name</label>
             <div class="controls">
@@ -63,7 +71,11 @@
         <div class="control-group">
             <label class="control-label" for="email">Email</label>
             <div class="controls">
-                <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email">
+                {% if session.fb_id %}
+                    <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email" readonly="readonly">
+                {% else %}
+                    <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email">
+                {% endif %}
             </div>
         </div>
         <div class="control-group">
@@ -80,14 +92,18 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">Update</button>
+                {% if register %}
+                    <button type="submit" class="btn btn-primary">Register</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Update</button>
+                {% endif %}
             </div>
         </div>
         <br/>
         <div class="control-group">
             <label class="control-label" for="paypal_id">PayPal ID</label>
             <div class="controls">
-                <input type="text" id="paypal_id" placeholder="PayPal ID" name="paypal_id">
+                <input type="text" id="paypal_id" placeholder="PayPal ID" name="paypal_id" value="{{ artist.paypal_id }}">
             </div>
         </div>
     {% endif %}

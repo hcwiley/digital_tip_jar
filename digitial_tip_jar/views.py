@@ -83,7 +83,8 @@ def facebook_authorized(resp):
     email = me.data['email']
     artist = collection.find_one({"email":email})
     if artist:
-      return redirect(url_for('index'))
+        session['user_name'] = artist.user_name
+        return redirect(url_for('index'))
     else:
       session['fb_id'] = me.data['id']
       session['fb_username'] = me.data['username']
@@ -146,8 +147,7 @@ def edit(user_name = None):
 
 
             if user_name is None:
-                # [XXX] Hardcoded shit
-                qr_path = qrcode_string("http://digitaltipjar.homemadebyrobots.org/"+request.form['user_name'])
+                qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
                 artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'])
                 flash('Registered Successfully',category='success')
             else:
@@ -175,9 +175,9 @@ def edit(user_name = None):
         if user_name:
             artist = get_artist(user_name)
             return render_template('register.html', artist=artist)
-        elif session['fb_id']: 
+        elif 'fb_id' in session:
             artist = Artist(session['fb_username'],'', session['fb_email'], fb_id = session['fb_id']) 
-            return render_template('register.html', artist=artist)
+            return render_template('register.html', artist=artist, register=True)
         else:
             return render_template('register.html', artist=None)
 
