@@ -16,9 +16,10 @@ def qrcode_string(string):
   qr.add_data(string)
   qr.make(fit=True)
   img = qr.make_image()
-  qrpath = '/root/digital_tip_jar/digitial_tip_jar/static/qr/'+str(uuid.uuid4())+'.jpg'
+  qr_url = '/static/qr/'+str(uuid.uuid4())+'.jpg'
+  qrpath = '/root/digital_tip_jar/digitial_tip_jar'+qr_url
   img.save(qrpath)
-  return qrpath
+  return qr_url
     	
 def slugify(value, users):
     """
