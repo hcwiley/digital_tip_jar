@@ -5,6 +5,13 @@ QR_PATH = '/root/digital_tip_jar/digitial_tip_jar'
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 
+# Facebook OAuth
+DEBUG = True
+FACEBOOK_APP_ID = '420876154648502'
+FACEBOOK_APP_SECRET = '9e6ce868fa5e31ba956a248b392c9f96'
+
+
+
 try:
     from dev_config import *
 except:

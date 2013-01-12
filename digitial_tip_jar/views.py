@@ -3,6 +3,20 @@ from flask import request, render_template, redirect, url_for, flash, session
 from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
 from artist import *
+from flask_oauth import OAuth
+
+oauth = OAuth()
+
+facebook = oauth.remote_app('facebook',
+    base_url='https://graph.facebook.com/',
+    request_token_url=None,
+    access_token_url='/oauth/access_token',
+    authorize_url='https://www.facebook.com/dialog/oauth',
+    consumer_key=FACEBOOK_APP_ID,
+    consumer_secret=FACEBOOK_APP_SECRET,
+    request_token_params={'scope': 'email'}
+)
+
 
 @app.route('/')
 def index():
@@ -42,6 +56,31 @@ def login():
 def logout():
     session.pop('user_name', None)
     return redirect(url_for('index'))
+ 
+@app.route('/fblogin')
+def fblogin():
+    return facebook.authorize(callback=url_for('facebook_authorized',
+        next=request.args.get('next') or request.referrer or None,
+        _external=True))
+
+
+@app.route('/fblogin/authorized')
+@facebook.authorized_handler
+def facebook_authorized(resp):
+    if resp is None:
+        return 'Access denied: reason=%s error=%s' % (
+            request.args['error_reason'],
+            request.args['error_description']
+        )
+    session['oauth_token'] = (resp['access_token'], '')
+    me = facebook.get('/me')
+    return 'Logged in as id=%s name=%s redirect=%s' % \
+        (me.data['id'], me.data['name'], request.args.get('next'))
+
+
+@facebook.tokengetter
+def get_facebook_oauth_token():
+    return session.get('oauth_token')
 
 
 @app.route('/<user_name>')
