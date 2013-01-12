@@ -4,9 +4,6 @@ from digitial_tip_jar import app
 from utils import slugify
 from user import *
 
-
-
-
 @app.route('/', methods=['POST','GET'])
 def index():
     users = get_users()
