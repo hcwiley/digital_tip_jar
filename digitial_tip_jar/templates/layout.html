@@ -11,17 +11,27 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="navbar navbar-inverse">
+        <div class="row-fluid">
+            <div class="pull-right">
+                <a href="/register">Register Artist/Band</a>
+                {% if session.user_name %}
+                    <a href="/{{ session.user_name }}/activity">Welcome {{ session.user_name }}</a>
+                    <a href="/logout">Log out</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+            <div class="span6 pull-left">
+                <h3><a class="brand brand_name" href="/">Digital Tip Jar</a></h3>
+            </div>
+
+
+        </div>
+        <div class="navbar">
             <div class="navbar-inner">
-                <a class="brand" href="/">Digital Tip Jar</a>
                 <ul class="nav">
-                    <li><a href="/register">Register Band</a></li>
-                    {% if session.user_name %}
-                        <li><a href="/{{ session.user_name }}">Welcome {{ session.user_name }}</a></li>
-                        <li><a href="/logout">Log out</a></li>
-                    {% else %}
-                        <li><a href="/login">Login</a></li>
-                    {% endif %}
+                    <li><a href="/bands"><h4>Artists/Bands</h4></a></li>
+                    <li><a href="/tipping"><h4>Tipping Activity</h4></a></li>
                 </ul>
             </div>
         </div>
