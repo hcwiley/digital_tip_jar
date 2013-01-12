@@ -16,7 +16,7 @@ def qrcode_string(string):
   qr.add_data(string)
   qr.make(fit=True)
   img = qr.make_image()
-  qrpath = 'static/qr'+uuid.uuid4()+'.jpg'
+  qrpath = 'static/qr'+str(uuid.uuid4())+'.jpg'
   img.save(qrpath)
   return qrpath
     	
