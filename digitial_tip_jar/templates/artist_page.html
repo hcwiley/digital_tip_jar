@@ -2,7 +2,7 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
 
-    <h2>{{artist.artist_name}}</h2>
+    <h2 id="artist_name">{{artist.artist_name}}</h2>
 
       {% include 'paypal.html' %}
 
@@ -26,16 +26,6 @@
 {% block js %}
     <script src="{{config.STATIC_URL}}js/moment.min.js"></script>
     <script>
-
-        $(".time").each(function(){
-            $(this).text(moment.utc($(this).attr('data-time')).fromNow());
-        });
-
-
-        $(".predefined-amount").click(function(){
-          $("#amount").val($(this).attr('data-value'))
-        });
-
         function save_tip(){
             $.ajax({
                 async: false,
@@ -47,11 +37,23 @@
                     "message": $("#message").val(),
                     "email":$("#email").val(),
                     "name": $("#name").val()
-                },
-                success: function() {
-
                 }
             });
         }
+
+        function init(){
+            $(".time").each(function(){
+                $(this).text(moment.utc($(this).attr('data-time')).fromNow());
+            });
+
+
+            $(".predefined-amount").click(function(){
+                $("#amount").val($(this).attr('data-value'))
+            });
+
+            $('html,body').animate({scrollTop:150+'px'}, 500);
+        }
+
+        $(document).ready(init);
     </script>
 {% endblock %}
