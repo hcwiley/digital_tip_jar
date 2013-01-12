@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block title %}Digital Tip Jar{% endblock %}
+{% block body %}
+    <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
+
+            <div class="control-group">
+                <label class="control-label" for="artist_name">Artist/Band Name</label>
+                <div class="controls">
+                    <input type="text" id="artist_name" placeholder="Artist/Band Name" name="artist_name" value="{{ artist.artist_name }}">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+                <div class="controls">
+                    {% if session.fb_id %}
+                        <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email" readonly="readonly">
+                    {% else %}
+                        <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">password</label>
+                <div class="controls">
+                    <input type="password" id="password" placeholder="password" name="password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="confirm_password">Confirm Password</label>
+                <div class="controls">
+                    <input type="password" id="confirm_password" placeholder="Confirm Password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="default_tip_amount">Default Tip Amount</label>
+                <div class="controls">
+                    <input type="number" id="default_tip_amount" value='{{ artist.default_tip_amount }}' name="default_tip_amount">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="paypal_id">PayPal ID</label>
+                <div class="controls">
+                    <input type="text" id="paypal_id" placeholder="PayPal ID" name="paypal_id" value="{{ artist.paypal_id }}">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+    </form>
+{% endblock %}
+{% block js %}
+    <script>
+        function checkPassword(){
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+
+            if(password == confirmPassword)
+                return true;
+
+            $("#alerts").append('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + 'Password does not match' + '</div>');
+            return false;
+        }
+    </script>
+{% endblock %}

@@ -118,12 +118,56 @@ def get_facebook_oauth_token():
     return session.get('oauth_token')
 
 
+@app.route('/<user_name>/update', methods=['POST','GET'])
+def user_update(user_name):
+    if 'logged_in' in session and 'user_name' in session and session['user_name'] == user_name:
+        artist = get_artist(user_name)
+
+        if request.method == 'POST':
+
+            message = validate_update_artist(request.form)
+
+            if message is None:
+                artist.artist_name = request.form['artist_name']
+                artist.email = request.form['email']
+                artist.default_tip_amount = float(request.form['default_tip_amount'])
+                if 'fb_id' in session:
+                    artist.fb_id = session['fb_id']
+
+                if 'password' in request.form and len(request.form['password']) > 0:
+                    artist.set_password(request.form['password'])
+
+                flash('Updated Successfully',category='success')
+
+                save_artist(artist)
+
+                return redirect(url_for('index'))
+            else:
+                flash(message,category='error')
+                return render_template('artist_update.html', artist=artist)
+
+
+        else:
+            if artist is not None:
+                return render_template('artist_update.html', artist=artist)
+
+    return "Error"
+
 @app.route('/<user_name>/activity')
 def user_activity(user_name):
     if 'logged_in' in session and 'user_name' in session and session['user_name'] == user_name:
         artist = get_artist(user_name)
         if artist is not None:
             return render_template('artist_activity.html', artist=artist, tips=get_tips_for_artist(user_name), total_tips=get_total_tip_amount_for_artist(user_name))
+
+    return "Error"
+
+@app.route('/<user_name>/qrcode')
+def user_qrcode(user_name):
+    if 'logged_in' in session and 'user_name' in session and session['user_name'] == user_name:
+        artist = get_artist(user_name)
+        if artist is not None:
+            return render_template('qrcode.html', artist=artist)
 
     return "Error"
 
@@ -169,46 +213,23 @@ def validate_update_artist(artist_form):
     if len(artist_form['artist_name']) == 0:
         return "Artist/Band Name is required"
 
-    if len(artist_form['user_name']) == 0:
-        return "Username is required"
-
     if len(artist_form['email']) == 0:
         return "Email is required"
 
 
 @app.route('/register', methods=['GET', 'POST'])
-@app.route('/update/<user_name>', methods=['GET', 'POST'])
 def edit(user_name = None):
 
     if request.method == 'POST':
 
-        if user_name:
-            message = validate_update_artist(request.form)
-        else:
-            message = validate_new_artist(request.form)
+        message = validate_new_artist(request.form)
 
         if message is None:
-
-            if user_name is None:
-                qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
-                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'], default_tip_amount=request.form['default_tip_amount'])
-                flash('Registered Successfully',category='success')
-            else:
-                artist = get_artist(user_name)
-                artist.artist_name = request.form['artist_name']
-                artist.email = request.form['email']
-                artist.default_tip_amount = request.form['default_tip_amount']
-                if session['fb_id']:
-                  artist.fb_id = session['fb_id']
-
-                if 'password' in request.form and len(request.form['password']) > 0:
-                    artist.set_password(request.form['password'])
-
-                flash('Updated Successfully',category='success')
-
+            qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
+            artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'], default_tip_amount=request.form['default_tip_amount'])
+            flash('Registered Successfully',category='success')
 
             save_artist(artist)
-
             return redirect(url_for('index'))
         else:
             flash(message,category='error')

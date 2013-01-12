@@ -16,6 +16,7 @@
                 {% if session.logged_in %}
                   {% if session.user_name %}
                     <a href="/{{ session.user_name }}/activity">Welcome {{ session.user_name }}</a>
+                    <a href="/{{ session.user_name }}/update">Update Profile</a>
                   {% else %}
                     <a href="/register">Register Band</a>
                   {% endif %}

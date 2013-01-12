@@ -1,5 +1,5 @@
 import json
-from config import MONGODB_HOST, MONGODB_PORT
+from config import *
 from pymongo import *
 from utils import JSONEncoder
 from bson.son import SON
@@ -34,7 +34,7 @@ def get_total_tip_amount_for_artist(artist_user_name):
 
     return sum
 
-def get_tips_for_artist(artist_user_name, size=20):
+def get_tips_for_artist(artist_user_name, size=RECENT_TIPS_SIZE):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
     collection = db['tips']
@@ -53,7 +53,7 @@ def get_most_recent_tip():
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
     collection = db['tips']
-    data = collection.find().sort("timestamp", DESCENDING).limit(1)
+    data = collection.find().sort("timestamp", DESCENDING).limit(MOST_RECENT_SIZE)
 
 
     for tip in data:

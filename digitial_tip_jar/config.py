@@ -13,6 +13,9 @@ FACEBOOK_APP_SECRET = '9e6ce868fa5e31ba956a248b392c9f96'
 PORT = 80
 DOMAIN = 'http://digitaltipjar.homemadebyrobots.org/'
 
+MOST_RECENT_SIZE = 1
+RECENT_TIPS_SIZE = 20
+
 
 
 try:

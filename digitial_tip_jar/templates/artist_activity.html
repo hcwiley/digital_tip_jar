@@ -8,7 +8,10 @@
     <h5>${{ total_tips }}</h5>
 
     <h3>QR Code</h3>
-    <img src="{{artist.qr_path}}">
+    <a href="/{{ artist.user_name}}/qrcode">
+        <img src="{{artist.qr_path}}">
+    </a>
+
 
     {% if tips|count > 0 %}
         <h3>Recent Tips</h3>

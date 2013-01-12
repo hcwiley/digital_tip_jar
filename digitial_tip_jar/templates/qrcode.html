@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Tip Jar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{config.STATIC_URL}}css/bootstrap.min.css">
+    <link rel=stylesheet type=text/css href="{{config.STATIC_URL}}css/bootstrap-responsive.min.css">
+    <link rel=stylesheet type=text/css href="{{config.STATIC_URL}}css/app.css">
+</head>
+<body onload="window.print()">
+    <h2>{{artist.artist_name}}</h2>
+    <img src="{{artist.qr_path}}">
+</body>
+</html>
