@@ -2,7 +2,7 @@ import config
 from flask import request, render_template, redirect, url_for
 from digitial_tip_jar import app
 from utils import slugify
-from utils import qrcode
+from utils import qrcode_string
 from user import *
 
 @app.route('/', methods=['POST','GET'])
@@ -41,7 +41,7 @@ def edit(user_name = None):
             else:
                 slug = user_name
             # [XXX] Hardcoded shit
-            qr_path = qrcode("http://75.126.35.122/"+slug)
+            qr_path = qrcode_string("http://75.126.35.122/"+slug)
 
             save_user(User(request.form['first_name'], request.form['last_name'], slug, request.form['band_name'], qr_path))
 
