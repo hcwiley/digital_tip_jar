@@ -180,9 +180,6 @@ def validate_update_artist(artist_form):
 @app.route('/register', methods=['GET', 'POST'])
 @app.route('/update/<user_name>', methods=['GET', 'POST'])
 def edit(user_name = None):
-    user = get_artist(session['user_name'])
-    if user.user_name is not user_name and not user.is_admin:
-      return redirect(url_for('index'))
        
     if request.method == 'POST':
         if user_name:
