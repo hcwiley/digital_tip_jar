@@ -2,12 +2,12 @@ import config
 from flask import request, render_template, redirect, url_for, flash, session
 from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
-from user import *
+from artist import *
 
 @app.route('/')
 def index():
-    users = get_users()
-    return render_template('index.html', users=users)
+    artists = get_artists()
+    return render_template('index.html', artists=artists)
 
 
 def validate_login(user_name, password):
@@ -17,7 +17,7 @@ def validate_login(user_name, password):
     if len(password) == 0:
         return "Password not specified"
 
-    if get_user(user_name) is None or get_user(user_name).check_password(password) is False:
+    if get_artist(user_name) is None or get_artist(user_name).check_password(password) is False:
         return "Invalid Username or Password"
 
     return None
@@ -46,20 +46,20 @@ def logout():
 
 @app.route('/<user_name>')
 def job(user_name):
-    user = get_user(user_name)
-    if user is not None:
-        return render_template('artist_page.html', user=user)
+    artist = get_artist(user_name)
+    if artist is not None:
+        return render_template('artist_page.html', artist=artist)
 
     return "Error"
 
-def validate_new_user(user_form):
-    if len(user_form['artist_name']) == 0:
+def validate_new_artist(artist_form):
+    if len(artist_form['artist_name']) == 0:
         return "Artist/Band Name is required"
 
-    if len(user_form['user_name']) == 0:
+    if len(artist_form['user_name']) == 0:
         return "Username is required"
 
-    if is_username_unique(user_form['user_name'], get_users()) is False:
+    if is_username_unique(artist_form['user_name'], get_artists()) is False:
         return "Username already taken"
 
     if len(user_form['email']) == 0:
@@ -68,14 +68,14 @@ def validate_new_user(user_form):
     if len(user_form['password']) == 0:
         return "Password is required"
 
-def validate_update_user(user_form):
-    if len(user_form['artist_name']) == 0:
+def validate_update_artist(artist_form):
+    if len(artist_form['artist_name']) == 0:
         return "Artist/Band Name is required"
 
-    if len(user_form['user_name']) == 0:
+    if len(artist_form['user_name']) == 0:
         return "Username is required"
 
-    if len(user_form['email']) == 0:
+    if len(artist_form['email']) == 0:
         return "Email is required"
 
 
@@ -86,9 +86,9 @@ def edit(user_name = None):
     if request.method == 'POST':
 
         if user_name:
-            message = validate_update_user(request.form)
+            message = validate_update_artist(request.form)
         else:
-            message = validate_new_user(request.form)
+            message = validate_new_artist(request.form)
 
         if message is None:
 
@@ -96,20 +96,20 @@ def edit(user_name = None):
             if user_name is None:
                 # [XXX] Hardcoded shit
                 qr_path = qrcode_string("http://75.126.35.122/"+request.form['user_name'])
-                user = User(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'])
+                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'])
                 flash('Registered Successfully',category='success')
             else:
-                user = get_user(user_name)
-                user.artist_name = request.form['artist_name']
-                user.email = request.form['email']
+                artist = get_artist(user_name)
+                artist.artist_name = request.form['artist_name']
+                artist.email = request.form['email']
 
                 if 'password' in request.form and len(request.form['password']) > 0:
-                    user.set_password(request.form['password'])
+                    artist.set_password(request.form['password'])
 
                 flash('Updated Successfully',category='success')
 
 
-            save_user(user)
+            save_artist(artist)
 
             return redirect(url_for('index'))
         else:

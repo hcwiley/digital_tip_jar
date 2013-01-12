@@ -2,7 +2,7 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
     <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
-        {% if not user %}
+        {% if not artist %}
         <div class="control-group">
             <label class="control-label" for="artist_name">Artist/Band Name</label>
             <div class="controls">
@@ -44,14 +44,14 @@
         <div class="control-group">
             <label class="control-label" for="artist_name">Artist/Band Name</label>
             <div class="controls">
-                <input type="text" id="artist_name" placeholder="Artist/Band Name" name="artist_name" value="{{ user.artist_name }}">
+                <input type="text" id="artist_name" placeholder="Artist/Band Name" name="artist_name" value="{{ artist.artist_name }}">
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="email">Email</label>
             <div class="controls">
-                <input type="text" id="email" placeholder="Email" value="{{ user.email }}" name="email">
+                <input type="text" id="email" placeholder="Email" value="{{ artist.email }}" name="email">
             </div>
         </div>
         <div class="control-group">
