@@ -59,6 +59,9 @@ def login():
             flash(message,category='error')
             render_template('login.html')
         else:
+            user = get_artist(user_name)
+            if user.is_admin:
+              session['is_admin'] = True
             session['user_name'] = user_name
             session['logged_in'] = True
             return redirect(url_for('index'))
