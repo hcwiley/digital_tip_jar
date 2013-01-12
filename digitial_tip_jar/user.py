@@ -7,7 +7,7 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.user_name = user_name
-	self.band_name = band_name
+        self.band_name = band_name
 
     def __repr__(self):
         return json.dumps(self.__dict__)
@@ -21,9 +21,9 @@ def save_user(user):
     userFromDB = collection.find_one({"user_name": user.user_name})
 
     if userFromDB is None:
-        collection.insert({"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name, "band_name": user.band_name})
+        collection.insert(user.__dict__)
     else:
-        collection.update({"user_name": user.user_name}, {"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name, "band_name":user.band_name})
+        collection.update({"user_name": user.user_name}, user.__dict__)
 
 
 def get_user(user_name):

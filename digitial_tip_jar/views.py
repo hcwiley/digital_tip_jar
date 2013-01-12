@@ -18,17 +18,6 @@ def job(user_name):
 
     return "Error"
 
-
-def convert_form_to_job(job_form):
-    return {
-        'name':job_form['name'].strip(),
-        'time': job_form['time'].strip(),
-        'lat':float(job_form['lat'].strip()) if len(job_form['lat'].strip()) > 0 else None,
-        'lon':float(job_form['lon'].strip()) if len(job_form['lon'].strip()) > 0 else None,
-        'distance':float(job_form['distance'].strip()) if len(job_form['distance'].strip()) > 0 else 1,
-        'tags': job_form['tags'].strip().split(',')
-    }
-
 def validate_user(user_form):
     if len(user_form['first_name']) == 0:
         return "First Name is required"

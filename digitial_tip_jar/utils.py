@@ -1,4 +1,5 @@
 import re
+import json
 import qrcode
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
@@ -41,3 +42,13 @@ def slugify(value, users):
         slug = slug + str(count)
 
     return slug
+
+
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if hasattr(obj, 'isoformat'): #handles both date and datetime objects
+            return obj.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+        else:
+            return json.JSONEncoder.default(self, obj)
