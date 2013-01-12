@@ -46,6 +46,13 @@ def slugify(value, users):
     return slug
 
 
+def is_username_unique(user_name, users):
+    for user in users:
+        if user_name.lower() == user.user_name.lower():
+            return False
+    return True
+
+
 
 
 class JSONEncoder(json.JSONEncoder):

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Digital Tip Jar{% endblock %}
+{% block body %}
+    <form method="POST" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="user_name">Username</label>
+            <div class="controls">
+                <input type="text" id="user_name" placeholder="Username" name="user_name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block js %}
+{% endblock %}
