@@ -62,10 +62,10 @@ def validate_new_artist(artist_form):
     if is_username_unique(artist_form['user_name'], get_artists()) is False:
         return "Username already taken"
 
-    if len(user_form['email']) == 0:
+    if len(artist_form['email']) == 0:
         return "Email is required"
 
-    if len(user_form['password']) == 0:
+    if len(artist_form['password']) == 0:
         return "Password is required"
 
 def validate_update_artist(artist_form):
