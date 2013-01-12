@@ -156,7 +156,6 @@ def edit(user_name = None):
 
         if message is None:
 
-
             if user_name is None:
                 qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
                 artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'])
@@ -179,7 +178,7 @@ def edit(user_name = None):
             return redirect(url_for('index'))
         else:
             flash(message,category='error')
-            return render_template('register.html', user=None)
+            return render_template('register.html', artist=None)
 
 
     else:
