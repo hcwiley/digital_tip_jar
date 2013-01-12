@@ -1,4 +1,4 @@
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="form-horizontal" id="tip-form" onsubmit="return save_tip()">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="business" value="{{artist.paypal_id}}">
   <input type="hidden" name="lc" value="US">
@@ -7,22 +7,51 @@
   <input type="hidden" name="no_note" value="0">
   <input type="hidden" name="currency_code" value="USD">
   <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
-  <table>
-  <tr><td><input type="hidden" name="on0" value="Tip Values">Tip Values</td></tr><tr><td><select name="os0">
-    <option value="Nice!">Nice! $1.00 USD</option>
-    <option value="Ace!">Ace! $2.00 USD</option>
-    <option value="Awesome!">Awesome! $5.00 USD</option>
-  </select> </td></tr>
-  </table>
-  <input type="hidden" name="currency_code" value="USD">
-  <input type="hidden" name="option_select0" value="Nice!">
-  <input type="hidden" name="option_amount0" value="1.00">
-  <input type="hidden" name="option_select1" value="Ace!">
-  <input type="hidden" name="option_amount1" value="2.00">
-  <input type="hidden" name="option_select2" value="Awesome!">
-  <input type="hidden" name="option_amount2" value="5.00">
-  <input type="hidden" name="option_index" value="0">
-  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-  <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+  <input type="hidden" name="user_name" value="{{artist.user_name}}"/>
+    <div class="control-group">
+        <label class="control-label" for="on0">Tip this band</label>
+        <div class="controls">
+            <input type="text" id="on0" name="on0" value="{{ artist.default_amount }}"/>USD
+        </div>
+        <div class="controls">
+            <em>* Tips of $20 or more receive a special limited edition live New Orleans music compilation</em>
+        </div>
+
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="predefined-amounts">Predefined Amounts</label>
+        <div class="controls">
+            <div id="predefined-amounts" class="btn-group">
+                <input type="button" class="btn predefined-amount" data-value="1.00" value="$1.00"/>
+                <input type="button" class="btn predefined-amount" data-value="5.00" value="$5.00"/>
+                <input type="button" class="btn predefined-amount" data-value="10.00" value="$10.00"/>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="name">Name</label>
+        <div class="controls">
+            <input type="text" id="name" placeholder="Name" name="name">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+            <input type="text" id="email" placeholder="Email" name="email">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="message">Message</label>
+        <div class="controls">
+            <textarea id="message" name="message"></textarea>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+        </div>
+    </div>
+
 </form>
 
