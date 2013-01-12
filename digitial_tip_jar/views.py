@@ -4,7 +4,6 @@ from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
 from artist import *
 from flask_oauth import OAuth
-import json
 import datetime
 from tip import *
 
