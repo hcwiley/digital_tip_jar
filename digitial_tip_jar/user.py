@@ -3,10 +3,11 @@ from config import MONGODB_HOST, MONGODB_PORT
 from pymongo import *
 
 class User:
-    def __init__(self, first_name, last_name, user_name):
+    def __init__(self, first_name, last_name, user_name, band_name):
         self.first_name = first_name
         self.last_name = last_name
         self.user_name = user_name
+        self.band_name = band_name
 
     def __repr__(self):
         return json.dumps(self.__dict__)
@@ -20,9 +21,9 @@ def save_user(user):
     userFromDB = collection.find_one({"user_name": user.user_name})
 
     if userFromDB is None:
-        collection.insert({"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name})
+        collection.insert({"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name, "band_name": user.band_name})
     else:
-        collection.update({"user_name": user.user_name}, {"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name})
+        collection.update({"user_name": user.user_name}, {"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name, "band_name":user.band_name})
 
 
 def get_user(user_name):
@@ -35,7 +36,7 @@ def get_user(user_name):
     if user is None:
         return None
 
-    return User(user['first_name'], user['last_name'], user['user_name'])
+    return User(user['first_name'], user['last_name'], user['user_name'], user['band_name'])
 
 
 def get_users():
@@ -46,7 +47,7 @@ def get_users():
     users = []
 
     for user in data:
-        users.append(User(user['first_name'], user['last_name'], user['user_name']))
+        users.append(User(user['first_name'], user['last_name'], user['user_name'], user['band_name']))
 
 
     return users
