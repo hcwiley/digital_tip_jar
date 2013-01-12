@@ -57,6 +57,7 @@ def login():
             render_template('login.html')
         else:
             session['user_name'] = user_name
+            session['logged_in'] = True
             return redirect(url_for('index'))
 
     return render_template('login.html')
@@ -64,6 +65,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_name', None)
+    session.pop('logged_in', None)
     return redirect(url_for('index'))
  
 @app.route('/fblogin')
@@ -86,6 +88,7 @@ def facebook_authorized(resp):
         )
     session['oauth_token'] = (resp['access_token'], '')
     me = facebook.get('/me')
+    session['logged_in'] = True
 # This is what me.data contains:
 # {"username": "epsasnova", "first_name": "Chrrles", "last_name": "Paul", "verified": true, "name": "Chrrles Paul", "locale": "en_US", "gender": "male", "email": "vmproperly@gmail.com", "link": "http://www.facebook.com/epsasnova", "timezone": -6, "updated_time": "2012-12-07T12:09:16+0000", "id": "100003333155909" }
     email = me.data['email']

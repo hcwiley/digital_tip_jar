@@ -14,7 +14,7 @@
         <div class="row-fluid">
             <div class="pull-right">
                 <a href="/register">Register Artist/Band</a>
-                {% if session.user_name %}
+                {% if session.logged_in %}
                     <a href="/{{ session.user_name }}/activity">Welcome {{ session.user_name }}</a>
                     <a href="/logout">Log out</a>
                 {% else %}
