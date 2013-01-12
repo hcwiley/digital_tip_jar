@@ -15,7 +15,7 @@
 {% block js %}
     <script>
         $(".predefined-amount").click(function(){
-          $("#on0").val($(this).attr('data-value'))
+          $("#amount").val($(this).attr('data-value'))
         });
 
         function save_tip(){
@@ -24,7 +24,7 @@
                 url: '/savetip',
                 data: {
                     "user_name": '{{artist.user_name}}',
-                    "amount": $("#on0").val(),
+                    "amount": $("#amount").val(),
                     "message": $("#message").val(),
                     "email":$("#email").val(),
                     "name": $("#name").val()
