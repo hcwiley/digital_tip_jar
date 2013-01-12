@@ -83,10 +83,10 @@ def get_most_popular_bands():
 
     artists = []
     count = 0
-    for tip in data:
+    for tip in data['result']:
         if count > 5:
             break
-
+        print "tip %s" % tip
         artists.append(get_artist(tip['_id']))
         count = count + 1
 

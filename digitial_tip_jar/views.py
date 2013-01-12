@@ -35,6 +35,11 @@ def index():
     return render_template('index.html', artists=artists)
 
 
+@app.route('/tips')
+def tip_activity():
+    return render_template('tip_activity.html', most_recent=get_most_recent_tip(), most_popular_bands=get_most_popular_bands(), top_patrons=get_active_tippers(), most_generous_patrons=get_generous_tippers())
+
+
 def validate_login(user_name, password):
     if len(user_name) == 0:
         return "Username not specified"
@@ -126,7 +131,7 @@ def post_tip():
     except:
         amount = 0.00
 
-    tip = Tip(request.form['user_name'], amount, request.form['message'], request.form['email'], request.form['name'], datetime.datetime.now())
+    tip = Tip(request.form['user_name'], amount, request.form['message'], request.form['email'], request.form['name'], datetime.datetime.utcnow())
     save_tip(tip)
     return "OK"
 

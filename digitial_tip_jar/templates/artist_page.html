@@ -20,6 +20,7 @@
 
         function save_tip(){
             $.ajax({
+                async: false,
                 type: "POST",
                 url: '/savetip',
                 data: {

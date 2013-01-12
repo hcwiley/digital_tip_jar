@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Digital Tip Jar{% endblock %}
+{% block body %}
+
+    <h4>Most Recent</h4>
+    {% if most_recent %}
+        <p>
+        {{ most_recent.name }} tipped <a href="{{ most_recent.artist_user_name }}">{{ most_recent.band_name }}</a> <span id="last-tip-time" data-time="{{ most_recent.time }}"></span>
+        </p>
+    {% endif %}
+
+    <h4>Most Popular Bands</h4>
+    <ol>
+        {% for band in most_popular_bands  %}
+            <li><a href="{{ band.user_name }}">{{ band.artist_name }}</a></li>
+        {% endfor %}
+    </ol>
+
+
+    <h4>Top Live Music Patrons</h4>
+    <ol>
+    {% for patron in top_patrons  %}
+        <li>{{ patron.name }}</li>
+    {% endfor %}
+    </ol>
+
+    <h4>Most Generous Patrons</h4>
+    <ol>
+    {% for patron in most_generous_patrons  %}
+        <li>{{ patron.name }}</li>
+    {% endfor %}
+    </ol>
+
+
+{% endblock %}
+{% block js %}
+    <script src="{{config.STATIC_URL}}js/moment.min.js"></script>
+    <script>
+        $("#last-tip-time").text(moment.utc($("#last-tip-time").attr('data-time')).fromNow());
+    </script>
+{% endblock %}

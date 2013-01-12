@@ -3,6 +3,8 @@ from config import MONGODB_HOST, MONGODB_PORT
 from pymongo import *
 from utils import JSONEncoder
 from bson.son import SON
+from artist import get_artist
+
 
 class Tip:
     def __init__(self, artist_user_name, amount, message, email_address, full_name, timestamp):
@@ -39,12 +41,18 @@ def get_most_recent_tip():
     db = connection['digital_tip_jar']
     collection = db['tips']
     data = collection.find().sort("time", DESCENDING).limit(1)
-    tips = []
+
 
     for tip in data:
-        tips.append(Tip(tip['artist_user_name'], tip['amount'], tip['message'], tip['email_address'], tip['full_name'], tip['timestamp']))
+        recent_tip_info = {}
+        recent_tip_info['name'] = tip['full_name']
+        recent_tip_info['artist_user_name'] = tip['artist_user_name']
+        recent_tip_info['band_name'] = get_artist(tip['artist_user_name']).artist_name
+        recent_tip_info['time'] = tip['timestamp'].strftime("%Y-%m-%dT%H:%M:%SZ")
+        return recent_tip_info
 
-    return tips[0]
+    return None
+
 
 def get_active_tippers():
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
@@ -52,19 +60,20 @@ def get_active_tippers():
     collection = db['tips']
 
     data = collection.aggregate([
-        {"$group": {"_id": "$name", "total": {"$sum": "$email"}}},
+        {"$group": {"_id": "$full_name", "total": {"$sum": "$email"}}},
         {"$sort": SON([("total", -1), ("_id", -1)])}
     ])
 
     tips = []
     count = 0
-    for tip in data:
+    for tip in data['result']:
         if count > 5:
             break
 
-        tips.append([tip['_id'], tip['total']])
+        tips.append({ "name":tip['_id'], "total_tips": tip['total']  })
         count = count + 1
 
+    print "gat: %s" % tips
     return tips
 
 
@@ -74,19 +83,20 @@ def get_generous_tippers():
     collection = db['tips']
 
     data = collection.aggregate([
-        {"$group": {"_id": "$name", "total": {"$sum": "$amount"}}},
+        {"$group": {"_id": "$full_name", "total": {"$sum": "$amount"}}},
         {"$sort": SON([("total", -1), ("_id", -1)])}
     ])
 
     tips = []
     count = 0
-    for tip in data:
+    for tip in data['result']:
         if count > 5:
             break
 
-        tips.append([tip['_id'], tip['total']])
+        tips.append({ "name":tip['_id'], "total_amount": tip['total']  })
         count = count + 1
 
+    print "ggt: %s" % tips
     return tips
 
 
