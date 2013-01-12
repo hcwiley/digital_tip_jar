@@ -75,9 +75,12 @@ def facebook_authorized(resp):
         )
     session['oauth_token'] = (resp['access_token'], '')
     me = facebook.get('/me')
-    return json.dumps(me.data) 
+# This is what me.data contains:
+# {"username": "epsasnova", "first_name": "Chrrles", "last_name": "Paul", "verified": true, "name": "Chrrles Paul", "locale": "en_US", "gender": "male", "email": "vmproperly@gmail.com", "link": "http://www.facebook.com/epsasnova", "timezone": -6, "updated_time": "2012-12-07T12:09:16+0000", "id": "100003333155909" }
+    session['user_name'] = me.data['username']
+    session['fb_id'] = me.data['id']
 
-    #return redirect(url_for('index'))
+    return redirect(url_for('index'))
 
 
 @facebook.tokengetter
