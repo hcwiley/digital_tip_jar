@@ -14,6 +14,9 @@ def qrcode(string):
   qr.add_data(string)
   qr.make(fit=True)
   img = qr.make_image()
+  qrpath = 'static/qr'+uuid.uuid4()+'.jpg'
+  img.save(qrpath)
+  return qrpath
     	
 def slugify(value, users):
     """
