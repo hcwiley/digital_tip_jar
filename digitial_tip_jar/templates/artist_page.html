@@ -19,7 +19,20 @@
         });
 
         function save_tip(){
-            return true;
+            $.ajax({
+                type: "POST",
+                url: '/savetip',
+                data: {
+                    "user_name": '{{artist.user_name}}',
+                    "amount": $("#on0").val(),
+                    "message": $("#message").val(),
+                    "email":$("#email").val(),
+                    "name": $("#name").val()
+                },
+                success: function() {
+
+                }
+            });
         }
     </script>
 {% endblock %}

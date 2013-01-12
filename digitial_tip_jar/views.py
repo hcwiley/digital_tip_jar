@@ -1,9 +1,12 @@
 import config
-from flask import request, render_template, redirect, url_for, flash, session
+from flask import request, render_template, redirect, url_for, flash, session, jsonify
 from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
 from artist import *
 from flask_oauth import OAuth
+import json
+import datetime
+from tip import *
 
 oauth = OAuth()
 
@@ -114,6 +117,18 @@ def job(user_name):
         return render_template('artist_page.html', artist=artist)
 
     return "Error"
+
+@app.route('/savetip', methods=['POST'])
+def post_tip():
+    try:
+        amount = float(request.form['amount'])
+    except:
+        amount = 0.00
+
+    tip = Tip(request.form['user_name'], amount, request.form['message'], request.form['email'], request.form['name'], datetime.datetime.now())
+    save_tip(tip)
+    return "OK"
+
 
 def validate_new_artist(artist_form):
     if len(artist_form['artist_name']) == 0:

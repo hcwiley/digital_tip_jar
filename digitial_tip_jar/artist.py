@@ -2,6 +2,7 @@ import json
 from config import MONGODB_HOST, MONGODB_PORT
 from pymongo import *
 from werkzeug.security import generate_password_hash, check_password_hash
+from bson.son import SON
 
 class Artist:
     def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00):
@@ -67,6 +68,27 @@ def get_artists():
 
         artists.append(artist_to_return)
 
+
+    return artists
+
+def get_most_popular_bands():
+    connection = Connection(MONGODB_HOST, MONGODB_PORT)
+    db = connection['digital_tip_jar']
+    collection = db['tips']
+
+    data = collection.aggregate([
+        {"$group": {"_id": "$artist_user_name", "total": {"$sum": "$amount"}}},
+        {"$sort": SON([("total", -1), ("_id", -1)])}
+    ])
+
+    artists = []
+    count = 0
+    for tip in data:
+        if count > 5:
+            break
+
+        artists.append(get_artist(tip['_id']))
+        count = count + 1
 
     return artists
 
