@@ -4,7 +4,7 @@ from pymongo import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Artist:
-    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id=''):
+    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00):
         self.user_name = user_name
         self.artist_name = artist_name
         self.email = email
@@ -12,6 +12,7 @@ class Artist:
         self.set_password(password)
         self.paypal_id = paypal_id
         self.fb_id = fb_id
+        self.default_tip_amount = default_tip_amount
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)

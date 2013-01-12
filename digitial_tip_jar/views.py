@@ -4,7 +4,6 @@ from digitial_tip_jar import app
 from utils import qrcode_string, is_username_unique
 from artist import *
 from flask_oauth import OAuth
-import json
 
 oauth = OAuth()
 
@@ -158,12 +157,13 @@ def edit(user_name = None):
 
             if user_name is None:
                 qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
-                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'])
+                artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'], default_tip_amount=request.form['default_tip_amount'])
                 flash('Registered Successfully',category='success')
             else:
                 artist = get_artist(user_name)
                 artist.artist_name = request.form['artist_name']
                 artist.email = request.form['email']
+                artist.default_tip_amount = request.form['default_tip_amount']
                 if session['fb_id']:
                   artist.fb_id = session['fb_id']
 

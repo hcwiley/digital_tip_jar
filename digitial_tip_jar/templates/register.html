@@ -98,6 +98,12 @@
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label" for="default_tip_amount">Default Tip Amount</label>
+            <div class="controls">
+                <input type="number" id="default_tip_amount" value='{{ artist.default_tip_amount }}' name="default_tip_amount">
+            </div>
+        </div>
+        <div class="control-group">
             <div class="controls">
                 {% if register %}
                     <button type="submit" class="btn btn-primary">Register</button>

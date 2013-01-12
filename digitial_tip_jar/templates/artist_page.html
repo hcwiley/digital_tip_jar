@@ -3,7 +3,52 @@
 {% block body %}
 
     <h2>{{artist.artist_name}}</h2>
-            <ul><span>Band Owner:<b> {{ artist.user_name }}</b></span></ul>
+
+    <form method="POST" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="tip">Tip this band</label>
+            <div class="controls">
+                <input type="text" id="tip" name="tip" value="{{ artist.default_amount }}"/>USD
+            </div>
+            <div class="controls">
+                <em>* Tips of $20 or more receive a special limited edition live New Orleans music compilation</em>
+            </div>
+
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="predefined-amounts">Predefined Amounts</label>
+            <div class="controls">
+                <div id="predefined-amounts" class="btn-group">
+                    <input type="button" class="btn predefined-amount" data-value="1.00" value="$1.00"/>
+                    <input type="button" class="btn predefined-amount" data-value="5.00" value="$5.00"/>
+                    <input type="button" class="btn predefined-amount" data-value="10.00" value="$10.00"/>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="name">Name</label>
+            <div class="controls">
+                <input type="text" id="name" placeholder="Name" name="name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <input type="text" id="email" placeholder="Email" name="email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="message">Message</label>
+            <div class="controls">
+                <textarea id="message" name="message"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Submit Tip</button>
+            </div>
+        </div>
+    </form>
 
     <h3>Pay This Band</h3>
 
@@ -13,9 +58,14 @@
 
 
     <h3>QR Code</h3>
-      <ul><img src="{{artist.qr_path}}"></ul>
+    <img src="{{artist.qr_path}}">
 
 
 {% endblock %}
 {% block js %}
+    <script>
+        $(".predefined-amount").click(function(){
+          $("#tip").val($(this).attr('data-value'))
+        });
+    </script>
 {% endblock %}
