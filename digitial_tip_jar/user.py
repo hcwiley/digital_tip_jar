@@ -20,9 +20,9 @@ def save_user(user):
     userFromDB = collection.find_one({"user_name": user.user_name})
 
     if userFromDB is None:
-        collection.insert(user)
+        collection.insert({"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name})
     else:
-        collection.update({"user_name": user.user_name}, user)
+        collection.update({"user_name": user.user_name}, {"first_name": user.first_name, "last_name": user.last_name, "user_name": user.user_name})
 
 
 def get_user(user_name):

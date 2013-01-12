@@ -2,7 +2,7 @@ import re
 
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
-def slugify(value, job_slugs):
+def slugify(value, users):
     """
     Normalizes string, converts to lowercase, removes non-alpha characters,
     and converts spaces to hyphens.
@@ -17,8 +17,8 @@ def slugify(value, job_slugs):
     slug = _slugify_hyphenate_re.sub('-', value)
     count = 0
 
-    for key in job_slugs:
-        if slug in key:
+    for user in users:
+        if slug in user.user_name:
             count = count + 1
 
     if count > 0:
