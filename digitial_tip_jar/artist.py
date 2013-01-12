@@ -4,12 +4,13 @@ from pymongo import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Artist:
-    def __init__(self, user_name, artist_name, email, qr_path = '', password=''):
+    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id=''):
         self.user_name = user_name
         self.artist_name = artist_name
         self.email = email
         self.qr_path = qr_path
         self.set_password(password)
+        self.paypal_id = paypal_id
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
@@ -45,7 +46,7 @@ def get_artist(user_name):
     if artist is None:
         return None
 
-    artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'])
+    artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], artist['paypal_id'])
     artist_to_return.pw_hash = artist['pw_hash']
 
     return artist_to_return
@@ -59,7 +60,7 @@ def get_artists():
     artists = []
 
     for artist in data:
-        artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'])
+        artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'])
         artist_to_return.pw_hash = artist['pw_hash']
 
         artists.append(artist_to_return)
