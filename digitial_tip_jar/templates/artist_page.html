@@ -5,9 +5,11 @@
     <h2>{{artist.artist_name}}</h2>
             <ul><span>Band Owner:<b> {{ artist.first_name }} {{ artist.last_name }}</b></span></ul>
 
+{% if len(artist.paypal_id) > 0 %}
     <h3>Pay This Band</h3>
       {% include 'paypal.html' %}
-      <ul>{{artist.paypal_id}} PayPal Us!</ul>
+      <ul> PayPal Us!</ul>
+{% endif % }
 
     <h3>QR Code</h3>
       <ul><img src="{{artist.qr_path}}"></ul>
