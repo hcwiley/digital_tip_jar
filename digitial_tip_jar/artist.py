@@ -62,7 +62,7 @@ def get_artists():
     artists = []
 
     for artist in data:
-        artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], artist['is_admin'])
+        artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], is_admin = artist['is_admin'])
         artist_to_return.pw_hash = artist['pw_hash']
 
         artists.append(artist_to_return)
