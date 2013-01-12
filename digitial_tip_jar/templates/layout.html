@@ -9,8 +9,9 @@
     {% block css %}{% endblock %}
 </head>
 <body>
+	<div class="span10">
     {% block body %}{% endblock %}
-
+	</div>
 
     <script src="{{config.STATIC_URL}}js/bootstrap.min.js"></script>
     {% block js %}{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
-
+<div class="span4 offset1">
     <h3>Bands</h3>
     <ul>
         {% for user in users %}
@@ -10,8 +10,8 @@
     </ul>
 
     <h3>Register a Band</h3>
-    <ul><a href="/register">Register a Band</a></ul>
-
+    <ul><a href="/register" class="btn btn-primary">Register a Band</a></ul>
+</div>
 {% endblock %}
 {% block js %}
 {% endblock %}
