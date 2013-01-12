@@ -1,0 +1,17 @@
+Flask==0.9
+Flask-OAuth==0.12
+Flask-PyMongo==0.2.1
+Jinja2==2.6
+PIL==1.1.7
+Werkzeug==0.8.3
+distribute==0.6.14
+facebook-sdk==0.4.0
+httplib2==0.7.7
+oauth2==1.5.211
+paypal==1.2.0
+pymongo==2.4.1
+python-apt==0.7.100.1-squeeze1
+qrcode==2.4.2
+reportbug==4.12.6
+requests==1.1.0
+wsgiref==0.1.2
