@@ -57,6 +57,7 @@ def login():
             render_template('login.html')
         else:
             session['user_name'] = user_name
+            session['logged_in'] = True
             return redirect(url_for('index'))
 
     return render_template('login.html')
@@ -64,6 +65,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_name', None)
+    session.pop('logged_in', None)
     return redirect(url_for('index'))
  
 @app.route('/fblogin')
@@ -86,18 +88,19 @@ def facebook_authorized(resp):
         )
     session['oauth_token'] = (resp['access_token'], '')
     me = facebook.get('/me')
+    session['logged_in'] = True
 # This is what me.data contains:
 # {"username": "epsasnova", "first_name": "Chrrles", "last_name": "Paul", "verified": true, "name": "Chrrles Paul", "locale": "en_US", "gender": "male", "email": "vmproperly@gmail.com", "link": "http://www.facebook.com/epsasnova", "timezone": -6, "updated_time": "2012-12-07T12:09:16+0000", "id": "100003333155909" }
     email = me.data['email']
     artist = collection.find_one({"email":email})
     if artist:
-        session['user_name'] = artist.user_name
+        session['logged_in'] = True
         return redirect(url_for('index'))
     else:
       session['fb_id'] = me.data['id']
       session['fb_username'] = me.data['username']
       session['fb_email'] = me.data['email']
-      return render_template('register.html')
+      return redirect(url_for('register'))
 
 
 @facebook.tokengetter
@@ -153,7 +156,6 @@ def edit(user_name = None):
 
         if message is None:
 
-
             if user_name is None:
                 qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
                 artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'])
@@ -176,7 +178,7 @@ def edit(user_name = None):
             return redirect(url_for('index'))
         else:
             flash(message,category='error')
-            return render_template('register.html', user=None)
+            return render_template('register.html', artist=None)
 
 
     else:
