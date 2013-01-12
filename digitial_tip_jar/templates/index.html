@@ -2,14 +2,26 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
 
-    <h3>Bands / Artists</h3>
-    <ul>
-        {% for artist in artists %}
-            <span><a href="/{{artist.user_name}}">{{ artist.artist_name }}</a></span><br/>
-        {% endfor %}
-    </ul>
-</div>
-
+    <h3>Artists/Bands</h3>
+    <div id="artist-list">
+        <input type="text" placeholder="Band or Artist Search" class="search input-xxlarge">
+        <ul class="list unstyled">
+            {% for artist in artists %}
+                <li>
+                    <span><a href="/{{artist.user_name}}" class="artist">{{ artist.artist_name }}</a></span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
 {% block js %}
+    {% if artists|count != 0 %}
+        <script src="{{config.STATIC_URL}}js/list.min.js"></script>
+        <script>
+            var options = {
+                valueNames: ['artist']
+            };
+            var artistList = new List('artist-list', options);
+        </script>
+    {% endif %}
 {% endblock %}
