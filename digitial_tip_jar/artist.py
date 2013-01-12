@@ -3,7 +3,7 @@ from config import MONGODB_HOST, MONGODB_PORT
 from pymongo import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class User:
+class Artist:
     def __init__(self, user_name, artist_name, email, qr_path = '', password=''):
         self.user_name = user_name
         self.artist_name = artist_name
@@ -22,48 +22,48 @@ class User:
         return json.dumps(self.__dict__)
 
 
-def save_user(user):
+def save_artist(artist):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
-    collection = db['users']
+    collection = db['artists']
 
-    userFromDB = collection.find_one({"user_name": user.user_name})
+    artistFromDB = collection.find_one({"user_name": artist.user_name})
 
-    if userFromDB is None:
-        collection.insert(user.__dict__)
+    if artistFromDB is None:
+        collection.insert(artist.__dict__)
     else:
-        collection.update({"user_name": user.user_name}, user.__dict__)
+        collection.update({"user_name": artist.user_name}, artist.__dict__)
 
 
-def get_user(user_name):
+def get_artist(user_name):
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
-    collection = db['users']
+    collection = db['artists']
 
-    user = collection.find_one({"user_name": user_name})
+    artist = collection.find_one({"user_name": user_name})
 
-    if user is None:
+    if artist is None:
         return None
 
-    user_to_return = User(user['user_name'], user['artist_name'], user['email'], qr_path=user['qr_path'])
-    user_to_return.pw_hash = user['pw_hash']
+    artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'])
+    artist_to_return.pw_hash = artist['pw_hash']
 
-    return user_to_return
+    return artist_to_return
 
 
-def get_users():
+def get_artists():
     connection = Connection(MONGODB_HOST, MONGODB_PORT)
     db = connection['digital_tip_jar']
-    collection = db['users']
+    collection = db['artists']
     data = collection.find({})
-    users = []
+    artists = []
 
-    for user in data:
-        user_to_return = User(user['user_name'], user['artist_name'], user['email'], qr_path=user['qr_path'])
-        user_to_return.pw_hash = user['pw_hash']
+    for artist in data:
+        artist_to_return = User(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'])
+        artist_to_return.pw_hash = artist['pw_hash']
 
-        users.append(user_to_return)
+        artists.append(artist_to_return)
 
 
-    return users
+    return artists
 
