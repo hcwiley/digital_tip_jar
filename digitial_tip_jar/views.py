@@ -6,6 +6,7 @@ from artist import *
 from flask_oauth import OAuth
 import datetime
 from tip import *
+from PIL import Image
 
 oauth = OAuth()
 
@@ -129,9 +130,24 @@ def user_update(user_name):
             message = validate_update_artist(request.form)
 
             if message is None:
+                if 'profile' in request.files:
+                    image = request.files['profile']
+                    if image:
+                        img = Image.open(image)
+                        img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '.jpg', 'JPEG')
+                        img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+                        img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg', 'JPEG')
+                        pic_url = STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg'
+                    else:
+                        pic_url = artist.pic_url
+                else:
+                    pic_url = artist.pic_url
+
+
                 artist.artist_name = request.form['artist_name']
                 artist.email = request.form['email']
                 artist.default_tip_amount = float(request.form['default_tip_amount'])
+                artist.pic_url = pic_url
                 if 'fb_id' in session:
                     artist.fb_id = session['fb_id']
 
@@ -226,8 +242,21 @@ def edit():
         message = validate_new_artist(request.form)
 
         if message is None:
+            if 'profile' in request.files:
+                image = request.files['profile']
+                if image:
+                    img = Image.open(image)
+                    img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '.jpg', 'JPEG')
+                    img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+                    img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg', 'JPEG')
+                    pic_url = STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg'
+                else:
+                    pic_url = None
+            else:
+                pic_url = None
+
             qr_path = qrcode_string(config.DOMAIN + request.form['user_name'])
-            artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'], default_tip_amount=request.form['default_tip_amount'])
+            artist = Artist(request.form['user_name'], request.form['artist_name'], request.form['email'], qr_path, request.form['password'], request.form['paypal_id'], default_tip_amount=request.form['default_tip_amount'], pic_url=pic_url)
             flash('Registered Successfully',category='success')
 
             save_artist(artist)

@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.son import SON
 
 class Artist:
-    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00, is_admin=False):
+    def __init__(self, user_name, artist_name, email, qr_path = '', password='', paypal_id='', fb_id='', default_tip_amount=0.00, is_admin=False, pic_url=None):
         self.user_name = user_name
         self.artist_name = artist_name
         self.email = email
@@ -15,6 +15,7 @@ class Artist:
         self.fb_id = fb_id
         self.default_tip_amount = default_tip_amount
         self.is_admin = is_admin
+        self.pic_url = pic_url
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)

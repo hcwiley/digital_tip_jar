@@ -15,6 +15,7 @@ DOMAIN = 'http://digitaltipjar.homemadebyrobots.org/'
 
 MOST_RECENT_SIZE = 1
 RECENT_TIPS_SIZE = 20
+IMAGE_SIZE = (300,1080)
 
 
 
