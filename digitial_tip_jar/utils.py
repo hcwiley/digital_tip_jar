@@ -54,6 +54,23 @@ def is_username_unique(user_name, users):
     return True
 
 
+def resize_image(file, size):
+    import os
+    from PIL import Image
+
+    outfile = os.path.splitext(file)[0] + "_profile.jpg"
+    if file != outfile:
+        try:
+            im = Image.open(file)
+            im.thumbnail(size, Image.ANTIALIAS)
+            im.save(outfile, "JPEG")
+            return outfile
+        except IOError:
+            return None
+
+    return file
+
+
 
 
 class JSONEncoder(json.JSONEncoder):
