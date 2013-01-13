@@ -1,4 +1,4 @@
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="form-horizontal" id="tip-form" onsubmit="return save_tip()">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="form-horizontal" id="tip-form" onsubmit="return save_tip()" target="_blank">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="business" value="{{artist.paypal_id}}">
   <input type="hidden" name="lc" value="US">
@@ -8,6 +8,7 @@
   <input type="hidden" name="currency_code" value="USD">
   <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
   <input type="hidden" name="user_name" value="{{artist.user_name}}"/>
+  <input type="hidden" name="CALLBACK" id="cbHDN" value="URL"/>
     <div class="control-group">
         <label class="control-label" for="amount">Tip this band</label>
         <div class="controls">
