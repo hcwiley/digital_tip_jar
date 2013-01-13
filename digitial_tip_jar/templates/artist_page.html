@@ -50,8 +50,15 @@
                 $("#cbHDN").val( location.href + "?tipamnt=" + $(this).attr('data-value') );
             });
 
-            $("#name").focus(function(){
-                $(".optional").fadeIn(750);
+            $("#name, #email, #message").focus(function(){
+              console.log("focus");
+              window.setTimeout(function(){
+                $(".optional").stop().fadeIn(750);
+              }, 1);
+            })
+            $("#name, #email, #message").blur(function(){
+                if($('#email').val() == "" && $('#message').val() == "" && $('#name').val() == "")
+                  $(".optional").fadeOut(750);
             });
 
             $(".time").each(function(){
