@@ -45,7 +45,9 @@
             $('html,body').animate({scrollTop:150+'px'}, 500);
 
             $(".predefined-amount").click(function(){
-                $("#amount").val($(this).attr('data-value'))
+                $("#amount").val($(this).attr('data-value'));
+
+                $("#cbHDN").val( location.href + "?tipamnt=" + $(this).attr('data-value') );
             });
 
             $("#name").focus(function(){
