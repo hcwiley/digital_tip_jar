@@ -14,7 +14,7 @@
         <div class="controls">
           <div class="input-prepend input-append">
             <span class="add-on">$</span>
-            <input class="span2" type="text" id="amount" name="amount" {% if artist.default_amount %} value="{{ artist.default_amount }}" {% else %} value="5.00" {% endif %}/>
+            <input class="span2" type="text" id="amount" name="amount" {% if artist.default_tip_amount %} value="{{ artist.default_tip_amount }}" {% else %} value="5.00" {% endif %}/>
             <span class="add-on">USD</span>
           </div>
         </div>

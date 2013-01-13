@@ -49,7 +49,7 @@ def get_artist(user_name):
     if artist is None:
         return None
 
-    artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], is_admin = artist['is_admin'], pic_url=artist['pic_url'])
+    artist_to_return = Artist(artist['user_name'], artist['artist_name'], artist['email'], qr_path=artist['qr_path'], paypal_id=artist['paypal_id'], fb_id = artist['fb_id'], is_admin = artist['is_admin'], pic_url=artist['pic_url'], default_tip_amount=artist['default_tip_amount'])
     artist_to_return.pw_hash = artist['pw_hash']
 
     return artist_to_return
