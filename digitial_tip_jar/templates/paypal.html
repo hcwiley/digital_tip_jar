@@ -12,7 +12,11 @@
     <div class="control-group">
         <label class="control-label" for="amount">Tip this band</label>
         <div class="controls">
-            <input type="text" id="amount" name="amount" value="{{ artist.default_amount }}"/> USD
+          <div class="input-prepend input-append">
+            <span class="add-on">$</span>
+            <input class="span2" type="text" id="amount" name="amount" {% if artist.default_amount %} value="{{ artist.default_amount }}" {% else %} value="5.00" {% endif %}/>
+            <span class="add-on">USD</span>
+          </div>
         </div>
         <div class="controls">
             <em>* Tips of $20 or more receive a special limited edition live New Orleans music compilation</em>
