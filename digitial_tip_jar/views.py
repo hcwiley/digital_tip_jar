@@ -78,6 +78,7 @@ def logout():
     session.pop('fb_id', None)
     session.pop('fb_username', None)
     session.pop('fb_email', None)
+    session.pop('is_admin', None)
     return redirect(url_for('index'))
  
 @app.route('/fblogin')
