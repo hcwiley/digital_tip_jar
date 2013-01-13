@@ -166,12 +166,12 @@ def user_update(user_name):
                 return redirect(url_for('index'))
             else:
                 flash(message,category='error')
-                return render_template('artist_update.html', artist=artist)
+                return render_template('artist_update.html', artist=artist, os=os)
 
 
         else:
             if artist is not None:
-                return render_template('artist_update.html', artist=artist)
+                return render_template('artist_update.html', artist=artist, os=os)
 
     return "Error"
 
