@@ -7,6 +7,8 @@ from flask_oauth import OAuth
 import datetime
 from tip import *
 from PIL import Image
+from werkzeug import secure_filename
+import os
 
 oauth = OAuth()
 
@@ -120,6 +122,10 @@ def get_facebook_oauth_token():
     return session.get('oauth_token')
 
 
+def allowed_file(filename):
+    return '.' in filename and\
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 @app.route('/<user_name>/update', methods=['POST','GET'])
 def user_update(user_name):
     if 'logged_in' in session and 'user_name' in session and session['user_name'] == user_name:
@@ -130,16 +136,15 @@ def user_update(user_name):
             message = validate_update_artist(request.form)
 
             if message is None:
-                if 'profile' in request.files:
-                    image = request.files['profile']
-                    if image:
-                        img = Image.open(image)
-                        img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '.jpg', 'JPEG')
-                        img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
-                        img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg', 'JPEG')
-                        pic_url = STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg'
-                    else:
-                        pic_url = artist.pic_url
+                file = request.files['profile']
+                if file and allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    img = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+                    img.save(os.path.join(app.config['UPLOAD_FOLDER'], user_name + '_profile.jpg'), 'JPEG')
+                    pic_url = STATIC_URL + 'profile/' + user_name + '_profile.jpg'
                 else:
                     pic_url = artist.pic_url
 
@@ -242,16 +247,15 @@ def edit():
         message = validate_new_artist(request.form)
 
         if message is None:
-            if 'profile' in request.files:
-                image = request.files['profile']
-                if image:
-                    img = Image.open(image)
-                    img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '.jpg', 'JPEG')
-                    img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
-                    img.save(STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg', 'JPEG')
-                    pic_url = STATIC_URL + 'profile/' + request.form['user_name'] + '_profile.jpg'
-                else:
-                    pic_url = None
+            file = request.files['profile']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                img = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+                img.save(os.path.join(app.config['UPLOAD_FOLDER'], request.form['user_name'] + '_profile.jpg'), 'JPEG')
+                pic_url = STATIC_URL + 'profile/' +request.form['user_name']+ '_profile.jpg'
             else:
                 pic_url = None
 
