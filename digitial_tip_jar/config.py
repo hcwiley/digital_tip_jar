@@ -4,6 +4,7 @@ STATIC_URL = '/static/'
 QR_PATH = '/root/digital_tip_jar/digitial_tip_jar'
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Facebook OAuth
 DEBUG = True
