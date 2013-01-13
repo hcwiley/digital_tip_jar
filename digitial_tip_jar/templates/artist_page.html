@@ -2,6 +2,9 @@
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
 
+    {% if artist.pic_url %}
+        <img src="{{ artist.pic_url }}"/>
+    {% endif %}
     <h2 id="artist_name">{{artist.artist_name}}</h2>
 
       {% include 'paypal.html' %}

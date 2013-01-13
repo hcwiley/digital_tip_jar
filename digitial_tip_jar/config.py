@@ -5,6 +5,7 @@ STATIC_URL = '/static/'
 QR_PATH = os.path.abspath(os.path.dirname(__file__)) 
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # Facebook OAuth
 DEBUG = True
@@ -17,6 +18,9 @@ DOMAIN = 'http://digitaltipjar.homemadebyrobots.org/'
 MOST_RECENT_SIZE = 1
 RECENT_TIPS_SIZE = 20
 IMAGE_SIZE = (300,1080)
+UPLOAD_FOLDER = '/root/digital_tip_jar/digitial_tip_jar/static/profile'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024 #16MB
 
 
 

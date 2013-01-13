@@ -6,6 +6,11 @@
 
     <h3>Total Tips</h3>
     <h5>${{ total_tips }}</h5>
+    
+    {% if artist.pic_url %}
+    <h3>Profile Picture</h3>
+    <img src="{{artist.pic_url}}"/>
+    {% endif %}
 
     <h3>QR Code</h3>
     <a href="/{{ artist.user_name}}/qrcode">

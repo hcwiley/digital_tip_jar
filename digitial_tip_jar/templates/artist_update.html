@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
-    <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
+    <form method="POST" class="form-horizontal" enctype="multipart/form-data" onsubmit="return checkPassword()">
 
             <div class="control-group">
                 <label class="control-label" for="artist_name">Artist/Band Name</label>
@@ -44,6 +44,15 @@
                     <input type="text" id="paypal_id" placeholder="PayPal ID" name="paypal_id" value="{{ artist.paypal_id }}">
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label" for="profile">Profile Picture</label>
+                <div class="controls">
+                    <input type="file" id="profile" name="profile">
+                </div>
+                <div>{{os.path.split(artist.pic_url)[-1:][0]}}</div>
+                <div><img src="{{artist.pic_url}}"/></div>
+            </div>
+
             <div class="control-group">
                 <div class="controls">
                     <button type="submit" class="btn btn-primary">Update</button>

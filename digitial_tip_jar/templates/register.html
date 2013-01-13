@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Digital Tip Jar{% endblock %}
 {% block body %}
-    <form method="POST" class="form-horizontal" onsubmit="return checkPassword()">
+    <form method="POST" class="form-horizontal" enctype="multipart/form-data" onsubmit="return checkPassword()">
         {% if not artist %}
 
             <div class="control-group">
@@ -53,6 +53,12 @@
             <label class="control-label" for="default_tip_amount">Default Tip Amount</label>
             <div class="controls">
                 <input type="number" id="default_tip_amount" value='5.00' name="default_tip_amount">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="profile">Profile Picture</label>
+            <div class="controls">
+                <input type="file" id="profile" name="profile">
             </div>
         </div>
         <div class="control-group">
@@ -109,6 +115,12 @@
                 <input type="text" id="paypal_id" placeholder="PayPal ID" name="paypal_id" value="{{ artist.paypal_id }}">
             </div>
         </div>
+            <div class="control-group">
+                <label class="control-label" for="profile">Profile Picture</label>
+                <div class="controls">
+                    <input type="file" id="profile" name="profile">
+                </div>
+            </div>
         <div class="control-group">
             <div class="controls">
                     <button type="submit" class="btn btn-primary">Register</button>
